@@ -22,9 +22,9 @@ export function CtaSection({ totalComercios }: CtaSectionProps) {
             <button className="bg-[#25D366] hover:bg-[#1ebe5d] text-white font-semibold px-8 py-4 rounded-full flex items-center justify-center gap-2 hover:-translate-y-0.5 transition-all">
               <MessageCircle className="w-5 h-5" /> Buscar agora — é grátis
             </button>
-            <button className="bg-[#FACC15] hover:bg-[#EAB308] text-[#111827] font-semibold px-8 py-4 rounded-full flex items-center justify-center gap-2 hover:-translate-y-0.5 transition-all">
+            <a href={`${import.meta.env.VITE_FRONTEND_URL ?? 'https://frontend-two-indol-36.vercel.app'}/comerciante/login`} className="bg-[#FACC15] hover:bg-[#EAB308] text-[#111827] font-semibold px-8 py-4 rounded-full flex items-center justify-center gap-2 hover:-translate-y-0.5 transition-all">
               <Store className="w-5 h-5" /> Ativar meu negócio
-            </button>
+            </a>
           </div>
 
           <div className="grid grid-cols-3 gap-8 max-w-sm mx-auto mt-12 pt-12 border-t border-[#374151]">
