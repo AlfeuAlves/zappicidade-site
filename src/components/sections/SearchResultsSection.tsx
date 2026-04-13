@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { MessageCircle, MapPin, Star, Phone, Loader2, X, Clock, ExternalLink, Info, Bell, Share2, CheckCircle2 } from "lucide-react";
 import { api, type Comercio } from "@/lib/api";
 
-const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER ?? "559291234567";
+const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER ?? "5591993870599";
 
 const ICONES: Record<string, string> = {
   restaurantes: "🍽️", mercados: "🛒", farmacias: "💊", saloes: "💇",
@@ -16,7 +16,8 @@ const DIAS: Record<string, string> = {
   quinta: "Quinta", sexta: "Sexta", sabado: "Sábado", domingo: "Domingo",
 };
 
-function formatHora(h: string) {
+function formatHora(h: string | undefined | null) {
+  if (!h) return "–";
   return h.replace(/(\d{2})(\d{2})/, "$1:$2");
 }
 
@@ -29,14 +30,14 @@ function linkWhatsApp(numero: string, msg: string) {
 // ── Modal de detalhes ──────────────────────────────────────────
 type OptinState = "idle" | "input" | "loading" | "success";
 
-function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void }) {
+export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void }) {
   const icone = ICONES[c.categoria_slug] || c.categoria_icone || "🏪";
   const numero = c.whatsapp || c.telefone;
   const wa = numero
     ? linkWhatsApp(numero, `Olá! Vi o ${c.nome} no ZappiCidade e quero saber mais.`)
     : null;
 
-  const horarios = (c as any).horarios as Record<string, { abre: string; fecha: string }> | null;
+  const horarios = (c as any).horarios as Record<string, { abre?: string; fecha?: string; aberto?: string; fechado?: string }> | null;
   const diasComHorario = horarios ? Object.entries(horarios) : [];
 
   // Comentários state
@@ -241,7 +242,7 @@ function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void }) {
                     fontSize: 12, color: "#374151", padding: "2px 0",
                   }}>
                     <span style={{ fontWeight: 500 }}>{DIAS[dia] || dia}</span>
-                    <span style={{ color: "#6B7280" }}>{formatHora(h.abre)} – {formatHora(h.fecha)}</span>
+                    <span style={{ color: "#6B7280" }}>{formatHora(h.abre ?? h.aberto)} – {formatHora(h.fecha ?? h.fechado)}</span>
                   </div>
                 ))}
               </div>
