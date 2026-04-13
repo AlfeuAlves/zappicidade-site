@@ -58,7 +58,7 @@ export function FooterSection() {
             <a href="#" className="text-[#4B5563] text-xs hover:text-[#9CA3AF] transition-colors">Política de Privacidade</a>
             <a href="#" className="text-[#4B5563] text-xs hover:text-[#9CA3AF] transition-colors">Termos de Uso</a>
             <a href="#" className="text-[#4B5563] text-xs hover:text-[#9CA3AF] transition-colors">LGPD</a>
-            <a href="https://painel.zappicidadebarcarena.com.br/comerciante/login" target="_blank" rel="noopener noreferrer" className="text-[#4B5563] text-xs hover:text-[#FACC15] transition-colors">⚙️ Admin</a>
+            <a href="https://painel.zappicidadebarcarena.com.br/admin/login" target="_blank" rel="noopener noreferrer" className="text-[#4B5563] text-xs hover:text-[#FACC15] transition-colors">⚙️ Admin</a>
           </div>
         </div>
       </div>
