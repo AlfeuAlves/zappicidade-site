@@ -54,10 +54,11 @@ export function FooterSection() {
           <div className="text-[#4B5563] text-xs font-['Inter']">
             © 2026 ZappiCidade · Barcarena, Pará · Todos os direitos reservados
           </div>
-          <div className="flex gap-6">
+          <div className="flex gap-6 items-center">
             <a href="#" className="text-[#4B5563] text-xs hover:text-[#9CA3AF] transition-colors">Política de Privacidade</a>
             <a href="#" className="text-[#4B5563] text-xs hover:text-[#9CA3AF] transition-colors">Termos de Uso</a>
             <a href="#" className="text-[#4B5563] text-xs hover:text-[#9CA3AF] transition-colors">LGPD</a>
+            <a href="https://zappicidade-painel.vercel.app/comerciante/login" target="_blank" rel="noopener noreferrer" className="text-[#4B5563] text-xs hover:text-[#FACC15] transition-colors">⚙️ Admin</a>
           </div>
         </div>
       </div>
