@@ -1,3 +1,10 @@
 {
+  "redirects": [
+    {
+      "source": "/zappi",
+      "destination": "https://wa.me/5591993870599?text=Oi%20Zappi!",
+      "permanent": false
+    }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
