@@ -68,7 +68,7 @@ export function MerchantsSection() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-            <a href={`${import.meta.env.VITE_FRONTEND_URL ?? 'https://zappicidade-painel.vercel.app'}/comerciante/login`} className="bg-[#FACC15] hover:bg-[#EAB308] text-[#111827] font-semibold px-8 py-4 rounded-full shadow-[0_4px_20px_rgba(250,204,21,0.40)] hover:-translate-y-0.5 transition-all text-center">
+            <a href={`${import.meta.env.VITE_FRONTEND_URL ?? 'https://painel.zappicidadebarcarena.com.br'}/comerciante/login`} className="bg-[#FACC15] hover:bg-[#EAB308] text-[#111827] font-semibold px-8 py-4 rounded-full shadow-[0_4px_20px_rgba(250,204,21,0.40)] hover:-translate-y-0.5 transition-all text-center">
               Ativar meu negócio
             </a>
             <a href="#planos" className="border-2 border-[#374151] hover:border-[#FACC15] text-[#9CA3AF] hover:text-[#FACC15] px-8 py-4 rounded-full transition-all font-semibold text-center">
