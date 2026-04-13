@@ -1,10 +1,11 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Navbar from './components/Navbar';
 import {
   HeroSection, HowItWorksSection, CategoriesSection,
   MerchantsSection, PlansSection, CtaSection, FooterSection,
   SearchResultsSection,
 } from './components/sections';
+import { ModalComercio } from './components/sections/SearchResultsSection';
 import { useCidadeStats } from './hooks/useCidadeStats';
 import { api, type Comercio } from './lib/api';
 
@@ -16,6 +17,17 @@ export default function App() {
   const [comercios, setComercios] = useState<Comercio[]>([]);
   const [total, setTotal] = useState(0);
   const [searching, setSearching] = useState(false);
+  const [modalComercio, setModalComercio] = useState<Comercio | null>(null);
+
+  // Detecta /c/[slug] na URL e abre o modal automaticamente
+  useEffect(() => {
+    const match = window.location.pathname.match(/^\/c\/([^/]+)/);
+    if (!match) return;
+    const slug = match[1];
+    api.comercios.porSlug(slug)
+      .then(c => { if (c) setModalComercio(c); })
+      .catch(() => {});
+  }, []);
 
   const handleSearch = useCallback(async (params: { busca: string; categoria: string; bairro: string }) => {
     const { busca, categoria, bairro } = params;
@@ -58,6 +70,17 @@ export default function App() {
   return (
     <div className="antialiased bg-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
       <Navbar totalComercios={resumo?.stats.total_comercios} />
+
+      {modalComercio && (
+        <ModalComercio
+          c={modalComercio}
+          onClose={() => {
+            setModalComercio(null);
+            window.history.pushState({}, "", "/");
+          }}
+        />
+      )}
+
       <main>
         <HeroSection
           totalComercios={resumo?.stats.total_comercios}

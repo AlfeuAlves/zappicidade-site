@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3001'
+const API_URL = (import.meta.env.VITE_API_URL ?? 'http://localhost:3001').trim()
 const CIDADE  = import.meta.env.VITE_CIDADE  ?? 'barcarena'
 
 export interface CidadeResumo {
@@ -52,6 +52,8 @@ export const api = {
       Object.entries(params).forEach(([k, v]) => { if (v !== '' && v !== undefined) qs.set(k, String(v)) })
       return get<ListaComercios>(`/comercios?${qs.toString()}`)
     },
+    porSlug: (slug: string) =>
+      get<Comercio>(`/comercios/${slug}`).catch(() => null),
   },
   comentarios: {
     listar: (comercio_id: string) =>

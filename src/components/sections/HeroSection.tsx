@@ -3,7 +3,7 @@ import { MessageCircle, Search, MapPin, ChevronDown, ArrowRight } from "lucide-r
 import { useReveal } from "@/hooks/useReveal";
 
 const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL ?? "http://localhost:3000";
-const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER ?? "559291234567";
+const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER ?? "5591993870599";
 
 // Mapeamento tipo → slug da categoria no backend
 const TIPOS = [
