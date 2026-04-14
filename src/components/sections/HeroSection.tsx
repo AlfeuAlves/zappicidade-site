@@ -5,31 +5,29 @@ import { useReveal } from "@/hooks/useReveal";
 const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL ?? "http://localhost:3000";
 const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER ?? "5591993870599";
 
-// Mapeamento tipo → slug da categoria no backend
-const TIPOS = [
-  { label: "Todos os tipos",       slug: "" },
-  { label: "🍽️ Alimentação",       slug: "restaurantes" },
-  { label: "💊 Saúde & Beleza",    slug: "farmacias" },
-  { label: "🛒 Mercados",          slug: "supermercados" },
-  { label: "🔧 Serviços",          slug: "mecanicas" },
-  { label: "🏥 Clínicas",          slug: "clinicas" },
-  { label: "📱 Eletrônicos",       slug: "eletronicos" },
-  { label: "📚 Educação",          slug: "escolas" },
-  { label: "💪 Esporte & Lazer",   slug: "academias" },
-];
+const TIPO_TODOS = { label: "Todos os tipos", slug: "" };
+
+interface Categoria {
+  slug: string;
+  nome: string;
+  icone: string;
+  total: number;
+}
 
 interface HeroSectionProps {
   totalComercios?: number;
   bairros?: string[];
+  categorias?: Categoria[];
   loading?: boolean;
   onSearch?: (params: { busca: string; categoria: string; bairro: string }) => void;
 }
 
-export function HeroSection({ totalComercios, bairros = [], loading = false, onSearch }: HeroSectionProps) {
+export function HeroSection({ totalComercios, bairros = [], categorias = [], loading = false, onSearch }: HeroSectionProps) {
   const { ref, isVisible } = useReveal();
   const [query, setQuery] = useState("");
   const [bairroSel, setBairroSel] = useState("Todos os bairros");
-  const [tipoSel, setTipoSel] = useState(TIPOS[0]);
+  const tipos = [TIPO_TODOS, ...categorias.map(c => ({ label: `${c.icone} ${c.nome}`, slug: c.slug }))];
+  const [tipoSel, setTipoSel] = useState(TIPO_TODOS);
   const bairrosList = ["Todos os bairros", ...bairros];
   const [showBairros, setShowBairros] = useState(false);
   const [showTipos, setShowTipos] = useState(false);
@@ -134,7 +132,7 @@ export function HeroSection({ totalComercios, bairros = [], loading = false, onS
                 </button>
                 {showTipos && (
                   <div className="absolute top-full left-0 mt-1 bg-white border border-[#E5E7EB] rounded-xl shadow-[0_8px_32px_rgba(31,41,55,0.12)] z-50 min-w-[200px] py-1 overflow-hidden">
-                    {TIPOS.map((t) => (
+                    {tipos.map((t) => (
                       <button
                         key={t.slug}
                         onClick={() => { setTipoSel(t); setShowTipos(false); }}

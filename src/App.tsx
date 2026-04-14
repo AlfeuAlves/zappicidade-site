@@ -85,6 +85,7 @@ export default function App() {
         <HeroSection
           totalComercios={resumo?.stats.total_comercios}
           bairros={bairros}
+          categorias={resumo?.stats.categorias}
           loading={loading}
           onSearch={handleSearch}
         />
