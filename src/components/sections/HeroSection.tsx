@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { MessageCircle, Search, MapPin, ChevronDown, ArrowRight } from "lucide-react";
 import { useReveal } from "@/hooks/useReveal";
 
@@ -31,6 +31,7 @@ export function HeroSection({ totalComercios, bairros = [], categorias = [], loa
   const bairrosList = ["Todos os bairros", ...bairros];
   const [showBairros, setShowBairros] = useState(false);
   const [showTipos, setShowTipos] = useState(false);
+  const chipsRef = useRef<HTMLDivElement>(null);
 
   // ── Busca principal → inline na página ──
   const handleSearch = () => {
@@ -90,20 +91,20 @@ export function HeroSection({ totalComercios, bairros = [], categorias = [], loa
               </button>
             </div>
 
-            {/* Filters row */}
-            <div className="flex items-center gap-0 border-t border-[#F3F4F6] px-4 py-2.5 relative">
-              {/* Bairro filter */}
-              <div className="relative flex-1">
+            {/* Filters row — bairro dropdown + category chips */}
+            <div className="border-t border-[#F3F4F6]">
+              {/* Bairro selector */}
+              <div className="relative px-4 py-2 border-b border-[#F3F4F6]">
                 <button
                   onClick={() => { setShowBairros(!showBairros); setShowTipos(false); }}
-                  className="flex items-center gap-1.5 text-xs font-semibold text-[#4B5563] hover:text-[#16A34A] transition-colors py-1 pr-3 w-full"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-[#4B5563] hover:text-[#16A34A] transition-colors"
                 >
-                  <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
-                  <span className="truncate">{bairroSel}</span>
+                  <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-[#9CA3AF]" />
+                  <span>{bairroSel}</span>
                   <ChevronDown className={`w-3.5 h-3.5 flex-shrink-0 transition-transform ${showBairros ? "rotate-180" : ""}`} />
                 </button>
                 {showBairros && (
-                  <div className="absolute top-full left-0 mt-1 bg-white border border-[#E5E7EB] rounded-xl shadow-[0_8px_32px_rgba(31,41,55,0.12)] z-50 min-w-[180px] max-h-48 overflow-y-auto py-1">
+                  <div className="absolute top-full left-0 mt-1 bg-white border border-[#E5E7EB] rounded-xl shadow-[0_8px_32px_rgba(31,41,55,0.12)] z-50 min-w-[200px] max-h-52 overflow-y-auto py-1">
                     {bairrosList.map((b) => (
                       <button
                         key={b}
@@ -119,32 +120,25 @@ export function HeroSection({ totalComercios, bairros = [], categorias = [], loa
                 )}
               </div>
 
-              <div className="w-px h-4 bg-[#E5E7EB] mx-1 flex-shrink-0" />
-
-              {/* Tipo filter */}
-              <div className="relative flex-1">
-                <button
-                  onClick={() => { setShowTipos(!showTipos); setShowBairros(false); }}
-                  className="flex items-center gap-1.5 text-xs font-semibold text-[#4B5563] hover:text-[#16A34A] transition-colors py-1 pl-3 w-full"
-                >
-                  <span className="truncate">{tipoSel.label}</span>
-                  <ChevronDown className={`w-3.5 h-3.5 flex-shrink-0 transition-transform ${showTipos ? "rotate-180" : ""}`} />
-                </button>
-                {showTipos && (
-                  <div className="absolute top-full left-0 mt-1 bg-white border border-[#E5E7EB] rounded-xl shadow-[0_8px_32px_rgba(31,41,55,0.12)] z-50 min-w-[200px] py-1 overflow-hidden">
-                    {tipos.map((t) => (
-                      <button
-                        key={t.slug}
-                        onClick={() => { setTipoSel(t); setShowTipos(false); }}
-                        className={`w-full text-left text-xs px-4 py-2.5 hover:bg-[#F0FDF4] hover:text-[#16A34A] transition-colors font-['Inter'] ${
-                          tipoSel.slug === t.slug ? "text-[#16A34A] font-semibold bg-[#F0FDF4]" : "text-[#4B5563]"
-                        }`}
-                      >
-                        {t.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
+              {/* Category chips — horizontal scroll */}
+              <div
+                ref={chipsRef}
+                className="flex gap-2 px-4 py-2.5 overflow-x-auto scrollbar-hide"
+                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              >
+                {tipos.map((t) => (
+                  <button
+                    key={t.slug}
+                    onClick={() => setTipoSel(t)}
+                    className={`flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-full border transition-all whitespace-nowrap font-['Inter'] ${
+                      tipoSel.slug === t.slug
+                        ? "bg-[#16A34A] text-white border-[#16A34A] shadow-sm"
+                        : "bg-white text-[#4B5563] border-[#E5E7EB] hover:border-[#16A34A] hover:text-[#16A34A]"
+                    }`}
+                  >
+                    {t.label}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
