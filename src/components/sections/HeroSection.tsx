@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { MessageCircle, Search, MapPin, ChevronDown, ArrowRight } from "lucide-react";
+import { MessageCircle, Search, MapPin, ChevronDown, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useReveal } from "@/hooks/useReveal";
 
 const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL ?? "http://localhost:3000";
@@ -32,6 +32,12 @@ export function HeroSection({ totalComercios, bairros = [], categorias = [], loa
   const [showBairros, setShowBairros] = useState(false);
   const [showTipos, setShowTipos] = useState(false);
   const chipsRef = useRef<HTMLDivElement>(null);
+
+  const scrollChips = (dir: "left" | "right") => {
+    if (chipsRef.current) {
+      chipsRef.current.scrollBy({ left: dir === "right" ? 160 : -160, behavior: "smooth" });
+    }
+  };
 
   // ── Busca principal → inline na página ──
   const handleSearch = () => {
@@ -120,25 +126,43 @@ export function HeroSection({ totalComercios, bairros = [], categorias = [], loa
                 )}
               </div>
 
-              {/* Category chips — horizontal scroll */}
-              <div
-                ref={chipsRef}
-                className="flex gap-2 px-4 py-2.5 overflow-x-auto scrollbar-hide"
-                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-              >
-                {tipos.map((t) => (
-                  <button
-                    key={t.slug}
-                    onClick={() => setTipoSel(t)}
-                    className={`flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-full border transition-all whitespace-nowrap font-['Inter'] ${
-                      tipoSel.slug === t.slug
-                        ? "bg-[#16A34A] text-white border-[#16A34A] shadow-sm"
-                        : "bg-white text-[#4B5563] border-[#E5E7EB] hover:border-[#16A34A] hover:text-[#16A34A]"
-                    }`}
-                  >
-                    {t.label}
-                  </button>
-                ))}
+              {/* Category chips — horizontal scroll with desktop arrows */}
+              <div className="relative flex items-center">
+                {/* Left arrow — desktop only */}
+                <button
+                  onClick={() => scrollChips("left")}
+                  className="hidden lg:flex absolute left-0 z-10 w-7 h-7 items-center justify-center bg-white border border-[#E5E7EB] rounded-full shadow-sm hover:border-[#16A34A] hover:text-[#16A34A] transition-colors flex-shrink-0 ml-2"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+
+                <div
+                  ref={chipsRef}
+                  className="flex gap-2 px-4 lg:px-10 py-2.5 overflow-x-auto"
+                  style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
+                >
+                  {tipos.map((t) => (
+                    <button
+                      key={t.slug}
+                      onClick={() => setTipoSel(t)}
+                      className={`flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-full border transition-all whitespace-nowrap font-['Inter'] ${
+                        tipoSel.slug === t.slug
+                          ? "bg-[#16A34A] text-white border-[#16A34A] shadow-sm"
+                          : "bg-white text-[#4B5563] border-[#E5E7EB] hover:border-[#16A34A] hover:text-[#16A34A]"
+                      }`}
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Right arrow — desktop only */}
+                <button
+                  onClick={() => scrollChips("right")}
+                  className="hidden lg:flex absolute right-0 z-10 w-7 h-7 items-center justify-center bg-white border border-[#E5E7EB] rounded-full shadow-sm hover:border-[#16A34A] hover:text-[#16A34A] transition-colors flex-shrink-0 mr-2"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             </div>
           </div>
