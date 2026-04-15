@@ -6,5 +6,11 @@
       "permanent": false
     }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/qr/:codigo",
+      "destination": "https://zappicidade-backend-production.up.railway.app/qr/:codigo"
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
