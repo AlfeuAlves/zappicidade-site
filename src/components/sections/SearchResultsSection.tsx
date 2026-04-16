@@ -39,6 +39,7 @@ export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void
 
   const horarios = (c as any).horarios as Record<string, { abre?: string; fecha?: string; aberto?: string; fechado?: string }> | null;
   const diasComHorario = horarios ? Object.entries(horarios).filter(([, h]) => h !== null) : [];
+  const [fotoAmpliada, setFotoAmpliada] = useState<string | null>(null);
 
   // Comentários state
   const [comentarios, setComentarios] = useState<{ id: string; nome: string | null; texto: string; estrelas: number; criado_em: string }[]>([]);
@@ -167,6 +168,27 @@ export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void
           </div>
         </div>
 
+        {/* Lightbox */}
+        {fotoAmpliada && (
+          <div
+            onClick={() => setFotoAmpliada(null)}
+            style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", zIndex: 2000, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+          >
+            <button
+              onClick={() => setFotoAmpliada(null)}
+              style={{ position: "absolute", top: 16, right: 16, background: "white", border: "none", borderRadius: "50%", width: 40, height: 40, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 2px 12px rgba(0,0,0,0.3)" }}
+            >
+              <X size={20} />
+            </button>
+            <img
+              src={fotoAmpliada}
+              alt="Foto ampliada"
+              onClick={e => e.stopPropagation()}
+              style={{ maxWidth: "100%", maxHeight: "90vh", borderRadius: 16, objectFit: "contain", boxShadow: "0 8px 40px rgba(0,0,0,0.5)" }}
+            />
+          </div>
+        )}
+
         {/* Galeria de fotos (PRO) */}
         {c.fotos && c.fotos.length > 0 && (
           <div style={{ overflowX: "auto", display: "flex", gap: 8, padding: "10px 16px", background: "#F9FAFB", borderBottom: "1px solid #F3F4F6", scrollbarWidth: "none" }}>
@@ -175,8 +197,10 @@ export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void
                 key={i}
                 src={url}
                 alt={`${c.nome} foto ${i + 1}`}
-                style={{ height: 80, width: 120, objectFit: "cover", borderRadius: 10, flexShrink: 0, cursor: "pointer", border: "1.5px solid #E5E7EB" }}
-                onClick={() => window.open(url, "_blank")}
+                style={{ height: 80, width: 120, objectFit: "cover", borderRadius: 10, flexShrink: 0, cursor: "zoom-in", border: "1.5px solid #E5E7EB", transition: "transform 0.15s, box-shadow 0.15s" }}
+                onClick={() => setFotoAmpliada(url)}
+                onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.06)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.18)"; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}
               />
             ))}
           </div>
