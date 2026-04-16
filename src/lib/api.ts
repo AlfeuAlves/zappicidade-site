@@ -25,6 +25,7 @@ export interface Comercio {
   total_avaliacoes: number
   foto_capa_url: string | null
   logo_url?: string | null
+  fotos?: string[]
   aberto_agora: boolean
   destaque: boolean
   verificado: boolean

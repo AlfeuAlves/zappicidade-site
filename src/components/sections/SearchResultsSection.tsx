@@ -167,6 +167,21 @@ export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void
           </div>
         </div>
 
+        {/* Galeria de fotos (PRO) */}
+        {c.fotos && c.fotos.length > 0 && (
+          <div style={{ overflowX: "auto", display: "flex", gap: 8, padding: "10px 16px", background: "#F9FAFB", borderBottom: "1px solid #F3F4F6", scrollbarWidth: "none" }}>
+            {c.fotos.map((url, i) => (
+              <img
+                key={i}
+                src={url}
+                alt={`${c.nome} foto ${i + 1}`}
+                style={{ height: 80, width: 120, objectFit: "cover", borderRadius: 10, flexShrink: 0, cursor: "pointer", border: "1.5px solid #E5E7EB" }}
+                onClick={() => window.open(url, "_blank")}
+              />
+            ))}
+          </div>
+        )}
+
         {/* Conteúdo */}
         <div style={{ padding: "20px 24px 28px" }}>
           <h2 style={{
