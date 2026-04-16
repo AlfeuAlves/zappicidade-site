@@ -38,7 +38,7 @@ export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void
     : null;
 
   const horarios = (c as any).horarios as Record<string, { abre?: string; fecha?: string; aberto?: string; fechado?: string }> | null;
-  const diasComHorario = horarios ? Object.entries(horarios) : [];
+  const diasComHorario = horarios ? Object.entries(horarios).filter(([, h]) => h !== null) : [];
 
   // Comentários state
   const [comentarios, setComentarios] = useState<{ id: string; nome: string | null; texto: string; estrelas: number; criado_em: string }[]>([]);
