@@ -29,6 +29,8 @@ export interface Comercio {
   aberto_agora: boolean
   destaque: boolean
   verificado: boolean
+  tem_fundador_ativo?: boolean
+  tem_selo_fundador?: boolean
 }
 
 export interface ListaComercios {

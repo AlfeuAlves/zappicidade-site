@@ -218,6 +218,22 @@ export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void
             {icone} {c.categoria_nome}
           </span>
 
+          {/* Badges */}
+          {(c.tem_fundador_ativo || c.tem_selo_fundador) && (
+            <div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }}>
+              {c.tem_fundador_ativo && (
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 4, background: "#FEF3C7", color: "#92400E", borderRadius: 99, padding: "3px 10px", fontSize: 12, fontWeight: 700, border: "1px solid #FDE68A" }}>
+                  🥇 Fundador ZappiCidade
+                </span>
+              )}
+              {!c.tem_fundador_ativo && c.tem_selo_fundador && (
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 4, background: "#F3F4F6", color: "#6B7280", borderRadius: 99, padding: "3px 10px", fontSize: 12, fontWeight: 600 }}>
+                  🥇 Fundador ZappiCidade
+                </span>
+              )}
+            </div>
+          )}
+
           {/* Avaliação */}
           {c.total_avaliacoes > 0 && (
             <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 12 }}>
@@ -603,6 +619,19 @@ function CardResult({ c, onVerInfo }: { c: Comercio; onVerInfo: () => void }) {
         }}>
           {c.nome}
         </h3>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
+          {c.tem_fundador_ativo && (
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 3, background: "#FEF3C7", color: "#92400E", borderRadius: 99, padding: "2px 8px", fontSize: 11, fontWeight: 700, border: "1px solid #FDE68A" }}>
+              🥇 Fundador
+            </span>
+          )}
+          {!c.tem_fundador_ativo && c.tem_selo_fundador && (
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 3, background: "#F3F4F6", color: "#6B7280", borderRadius: 99, padding: "2px 8px", fontSize: 11, fontWeight: 600 }}>
+              🥇 Fundador
+            </span>
+          )}
+        </div>
 
         <span style={{ fontSize: 12, color: "#6B7280", fontWeight: 500 }}>
           {icone} {c.categoria_nome}
