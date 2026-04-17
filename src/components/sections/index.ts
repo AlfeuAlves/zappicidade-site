@@ -6,3 +6,4 @@ export { PlansSection } from './PlansSection';
 export { CtaSection } from './CtaSection';
 export { FooterSection } from './FooterSection';
 export { SearchResultsSection } from './SearchResultsSection';
+export { QrCodeSection } from './QrCodeSection';
