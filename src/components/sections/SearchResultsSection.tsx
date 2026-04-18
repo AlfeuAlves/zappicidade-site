@@ -40,6 +40,7 @@ export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void
   const horarios = (c as any).horarios as Record<string, { abre?: string; fecha?: string; aberto?: string; fechado?: string }> | null;
   const diasComHorario = horarios ? Object.entries(horarios).filter(([, h]) => h !== null) : [];
   const [fotoAmpliada, setFotoAmpliada] = useState<string | null>(null);
+  const [promoAmpliada, setPromoAmpliada] = useState<NonNullable<typeof c.promocoes>[number] | null>(null);
 
   // Comentários state
   const [comentarios, setComentarios] = useState<{ id: string; nome: string | null; texto: string; estrelas: number; criado_em: string }[]>([]);
@@ -168,6 +169,56 @@ export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void
           </div>
         </div>
 
+        {/* Lightbox promoção */}
+        {promoAmpliada && (
+          <div onClick={() => setPromoAmpliada(null)}
+            style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", zIndex: 2000, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+            <div onClick={e => e.stopPropagation()}
+              style={{ background: "white", borderRadius: 20, maxWidth: 420, width: "100%", overflow: "hidden", boxShadow: "0 8px 40px rgba(0,0,0,0.5)" }}>
+              <button onClick={() => setPromoAmpliada(null)}
+                style={{ position: "absolute", top: 16, right: 16, background: "white", border: "none", borderRadius: "50%", width: 40, height: 40, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 2px 12px rgba(0,0,0,0.3)", zIndex: 10 }}>
+                <X size={20} />
+              </button>
+              {promoAmpliada.imagem_url && (
+                <img src={promoAmpliada.imagem_url} alt={promoAmpliada.titulo}
+                  style={{ width: "100%", height: 220, objectFit: "cover", display: "block" }} />
+              )}
+              <div style={{ padding: "20px 24px 24px" }}>
+                <div style={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 18, color: "#111827", marginBottom: 8 }}>
+                  {promoAmpliada.titulo}
+                </div>
+                {promoAmpliada.descricao && (
+                  <div style={{ fontSize: 14, color: "#6B7280", fontFamily: "Inter, sans-serif", marginBottom: 12, lineHeight: 1.5 }}>
+                    {promoAmpliada.descricao}
+                  </div>
+                )}
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+                  {promoAmpliada.percentual_desconto && (
+                    <span style={{ background: "#DCFCE7", color: "#16A34A", fontWeight: 700, fontSize: 15, padding: "4px 12px", borderRadius: 99, fontFamily: "Poppins, sans-serif" }}>
+                      {promoAmpliada.percentual_desconto}% OFF
+                    </span>
+                  )}
+                  {promoAmpliada.preco_de && (
+                    <span style={{ fontSize: 13, color: "#9CA3AF", textDecoration: "line-through", fontFamily: "Inter, sans-serif" }}>
+                      R$ {Number(promoAmpliada.preco_de).toFixed(2)}
+                    </span>
+                  )}
+                  {promoAmpliada.preco_por && (
+                    <span style={{ fontSize: 18, fontWeight: 700, color: "#16A34A", fontFamily: "Poppins, sans-serif" }}>
+                      R$ {Number(promoAmpliada.preco_por).toFixed(2)}
+                    </span>
+                  )}
+                </div>
+                {promoAmpliada.fim && (
+                  <div style={{ fontSize: 12, color: "#9CA3AF", fontFamily: "Inter, sans-serif", marginTop: 12 }}>
+                    ⏰ Válido até {new Date(promoAmpliada.fim).toLocaleDateString("pt-BR")}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Lightbox */}
         {fotoAmpliada && (
           <div
@@ -260,7 +311,9 @@ export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void
               </div>
               <div style={{ overflowX: "auto", display: "flex", gap: 10, scrollbarWidth: "none" }}>
                 {c.promocoes.map((promo) => (
-                  <div key={promo.id} style={{ flexShrink: 0, width: 140, borderRadius: 10, border: "1.5px solid #E5E7EB", overflow: "hidden", background: "#fff" }}>
+                  <div key={promo.id} onClick={() => setPromoAmpliada(promo)} style={{ flexShrink: 0, width: 140, borderRadius: 10, border: "1.5px solid #E5E7EB", overflow: "hidden", background: "#fff", cursor: "pointer", transition: "box-shadow 0.15s" }}
+                    onMouseEnter={e => e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.15)"}
+                    onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
                     {promo.imagem_url ? (
                       <img
                         src={promo.imagem_url}
