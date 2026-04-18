@@ -31,6 +31,17 @@ export interface Comercio {
   verificado: boolean
   tem_fundador_ativo?: boolean
   tem_selo_fundador?: boolean
+  promocoes?: {
+    id: string
+    titulo: string
+    descricao?: string
+    tipo?: string
+    preco_de?: number
+    preco_por?: number
+    percentual_desconto?: number
+    imagem_url?: string
+    fim?: string
+  }[]
 }
 
 export interface ListaComercios {

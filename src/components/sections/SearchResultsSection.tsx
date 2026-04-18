@@ -252,6 +252,52 @@ export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void
             </div>
           )}
 
+          {/* Promoções ativas */}
+          {c.promocoes && c.promocoes.length > 0 && (
+            <div style={{ marginTop: 16 }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#111827", marginBottom: 8 }}>
+                🏷️ Promoções
+              </div>
+              <div style={{ overflowX: "auto", display: "flex", gap: 10, scrollbarWidth: "none" }}>
+                {c.promocoes.map((promo) => (
+                  <div key={promo.id} style={{ flexShrink: 0, width: 140, borderRadius: 10, border: "1.5px solid #E5E7EB", overflow: "hidden", background: "#fff" }}>
+                    {promo.imagem_url ? (
+                      <img
+                        src={promo.imagem_url}
+                        alt={promo.titulo}
+                        style={{ width: "100%", height: 90, objectFit: "cover" }}
+                      />
+                    ) : (
+                      <div style={{ width: "100%", height: 90, background: "#F3F4F6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>
+                        🏷️
+                      </div>
+                    )}
+                    <div style={{ padding: "6px 8px" }}>
+                      <div style={{ fontSize: 11, fontWeight: 700, color: "#111827", lineHeight: 1.3 }}>
+                        {promo.titulo}
+                      </div>
+                      {promo.percentual_desconto && (
+                        <div style={{ fontSize: 11, color: "#16A34A", fontWeight: 700, marginTop: 2 }}>
+                          {promo.percentual_desconto}% OFF
+                        </div>
+                      )}
+                      {promo.preco_por && (
+                        <div style={{ fontSize: 11, color: "#16A34A", fontWeight: 700, marginTop: 2 }}>
+                          por R$ {Number(promo.preco_por).toFixed(2)}
+                        </div>
+                      )}
+                      {promo.fim && (
+                        <div style={{ fontSize: 10, color: "#9CA3AF", marginTop: 2 }}>
+                          até {new Date(promo.fim).toLocaleDateString("pt-BR")}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div style={{ height: 1, background: "#F3F4F6", margin: "16px 0" }} />
 
           {/* Endereço */}
