@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MessageCircle, Menu, X } from "lucide-react";
+import { MessageCircle, Menu, X, LogIn } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
 const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER ?? "5591993870599";
@@ -94,6 +94,29 @@ export function DirectoryHeader() {
             className="hidden-mobile"
           >
             Cadastrar negócio
+          </a>
+
+          {/* Entrar — desktop e mobile */}
+          <a
+            href={FRONTEND_URL}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 5,
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: 700,
+              fontSize: 12,
+              color: "#374151",
+              textDecoration: "none",
+              padding: "7px 14px",
+              borderRadius: 8,
+              border: "1.5px solid #E5E7EB",
+              whiteSpace: "nowrap",
+              background: "white",
+            }}
+          >
+            <LogIn size={13} />
+            Entrar
           </a>
 
           {/* WhatsApp bot — sempre visível */}
