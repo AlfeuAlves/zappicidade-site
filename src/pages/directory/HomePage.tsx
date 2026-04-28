@@ -188,6 +188,15 @@ export function HomePage() {
         <section style={{ background: "white", padding: "48px 20px 40px", borderBottom: "1px solid #E5E7EB" }}>
           <div style={{ maxWidth: 680, margin: "0 auto", textAlign: "center" }}>
 
+            {/* Logo grande centralizada */}
+            <div style={{ marginBottom: 24 }}>
+              <img
+                src="/logo_principal.png"
+                alt="ZappiCidade Barcarena"
+                style={{ height: 120, width: "auto", objectFit: "contain", display: "inline-block" }}
+              />
+            </div>
+
             {/* Location pill */}
             <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: 99, padding: "4px 14px", marginBottom: 20 }}>
               <MapPin size={12} color="#16A34A" />
