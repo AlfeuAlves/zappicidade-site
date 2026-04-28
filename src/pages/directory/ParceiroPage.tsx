@@ -152,128 +152,103 @@ export function ParceiroPage() {
           </div>
         </section>
 
-        {/* ── FORMULÁRIO DE CADASTRO ─────────────────────────── */}
+        {/* ── COMO FUNCIONA ─────────────────────────────────── */}
         <section id="cadastrar" style={{ background: "white", padding: "56px 20px", borderTop: "1px solid #E5E7EB" }}>
-          <div style={{ maxWidth: 520, margin: "0 auto" }}>
+          <div style={{ maxWidth: 640, margin: "0 auto" }}>
 
-            <div style={{ textAlign: "center", marginBottom: 32 }}>
+            <div style={{ textAlign: "center", marginBottom: 40 }}>
               <h2 style={{ fontFamily: "Poppins, sans-serif", fontWeight: 800, fontSize: 24, color: "#111827", margin: "0 0 8px" }}>
-                Cadastre seu negócio agora
+                Como funciona o cadastro
               </h2>
               <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "#6B7280", margin: 0 }}>
-                Leva menos de 2 minutos. Comece grátis.
+                Simples e rápido — leva menos de 2 minutos
               </p>
             </div>
 
-            {submitted ? (
-              <div style={{ textAlign: "center", padding: "40px 20px" }}>
-                <div style={{ width: 64, height: 64, background: "#F0FDF4", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
-                  <CheckCircle2 size={32} color="#16A34A" />
-                </div>
-                <p style={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 18, color: "#111827", margin: "0 0 8px" }}>
-                  Redirecionando para o cadastro...
-                </p>
-                <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "#6B7280" }}>
-                  Você será levado para o painel de cadastro em instantes.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {/* Passo a passo */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 0, marginBottom: 40 }}>
+              {[
+                {
+                  num: "1",
+                  titulo: "Crie sua conta de comerciante",
+                  desc: "Informe seu nome e WhatsApp para criar sua conta no painel ZappiCidade.",
+                  icon: "👤",
+                },
+                {
+                  num: "2",
+                  titulo: "Encontre seu estabelecimento",
+                  desc: "Busque o nome do seu negócio — temos mais de 1.300 estabelecimentos já cadastrados em Barcarena.",
+                  icon: "🔍",
+                },
+                {
+                  num: "3",
+                  titulo: "Não encontrou? Cadastre um novo",
+                  desc: "Se seu estabelecimento ainda não está na base, basta clicar em \"Cadastrar novo\" e preencher as informações.",
+                  icon: "➕",
+                },
+                {
+                  num: "4",
+                  titulo: "Aguarde a aprovação",
+                  desc: "Nossa equipe valida a solicitação e aprova a associação do seu perfil ao estabelecimento. Em geral, aprovamos em menos de 24h.",
+                  icon: "✅",
+                },
+              ].map((step, i, arr) => (
+                <div key={step.num} style={{ display: "flex", gap: 16, position: "relative" }}>
+                  {/* Linha conectora */}
+                  {i < arr.length - 1 && (
+                    <div style={{ position: "absolute", left: 19, top: 44, width: 2, height: "calc(100% - 12px)", background: "#E5E7EB", zIndex: 0 }} />
+                  )}
 
-                {/* Nome do negócio */}
-                <div>
-                  <label style={{ display: "block", fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 13, color: "#374151", marginBottom: 6 }}>
-                    Nome do negócio *
-                  </label>
-                  <input
-                    name="nome"
-                    type="text"
-                    required
-                    value={formData.nome}
-                    onChange={handleChange}
-                    placeholder="Ex: Açaí da Praça"
-                    style={{ width: "100%", padding: "11px 14px", borderRadius: 10, border: "1.5px solid #E5E7EB", fontFamily: "Inter, sans-serif", fontSize: 14, color: "#111827", outline: "none", boxSizing: "border-box" }}
-                    onFocus={e => e.target.style.borderColor = "#16A34A"}
-                    onBlur={e => e.target.style.borderColor = "#E5E7EB"}
-                  />
-                </div>
-
-                {/* Categoria */}
-                <div>
-                  <label style={{ display: "block", fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 13, color: "#374151", marginBottom: 6 }}>
-                    Categoria *
-                  </label>
-                  <select
-                    name="categoria"
-                    required
-                    value={formData.categoria}
-                    onChange={handleChange}
-                    style={{ width: "100%", padding: "11px 14px", borderRadius: 10, border: "1.5px solid #E5E7EB", fontFamily: "Inter, sans-serif", fontSize: 14, color: formData.categoria ? "#111827" : "#9CA3AF", background: "white", cursor: "pointer", boxSizing: "border-box" }}
-                  >
-                    <option value="" disabled>Selecione uma categoria</option>
-                    {CATEGORIAS_FORM.map(c => <option key={c} value={c}>{c}</option>)}
-                  </select>
-                </div>
-
-                {/* WhatsApp */}
-                <div>
-                  <label style={{ display: "block", fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 13, color: "#374151", marginBottom: 6 }}>
-                    WhatsApp do negócio *
-                  </label>
-                  <input
-                    name="whatsapp"
-                    type="tel"
-                    required
-                    value={formData.whatsapp}
-                    onChange={handleChange}
-                    placeholder="(91) 99999-9999"
-                    style={{ width: "100%", padding: "11px 14px", borderRadius: 10, border: "1.5px solid #E5E7EB", fontFamily: "Inter, sans-serif", fontSize: 14, color: "#111827", outline: "none", boxSizing: "border-box" }}
-                    onFocus={e => e.target.style.borderColor = "#16A34A"}
-                    onBlur={e => e.target.style.borderColor = "#E5E7EB"}
-                  />
-                </div>
-
-                {/* Bairro */}
-                <div>
-                  <label style={{ display: "block", fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 13, color: "#374151", marginBottom: 6 }}>
-                    Bairro
-                  </label>
-                  <input
-                    name="bairro"
-                    type="text"
-                    value={formData.bairro}
-                    onChange={handleChange}
-                    placeholder="Ex: Centro, Murucupi..."
-                    style={{ width: "100%", padding: "11px 14px", borderRadius: 10, border: "1.5px solid #E5E7EB", fontFamily: "Inter, sans-serif", fontSize: 14, color: "#111827", outline: "none", boxSizing: "border-box" }}
-                    onFocus={e => e.target.style.borderColor = "#16A34A"}
-                    onBlur={e => e.target.style.borderColor = "#E5E7EB"}
-                  />
-                </div>
-
-                {/* Submit */}
-                <button
-                  type="submit"
-                  style={{
+                  {/* Círculo numerado */}
+                  <div style={{
+                    width: 40, height: 40, borderRadius: "50%", flexShrink: 0,
+                    background: "#16A34A", color: "white", zIndex: 1,
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    gap: 8, background: "#16A34A", color: "white",
-                    fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 15,
-                    padding: "14px", borderRadius: 12, border: "none", cursor: "pointer",
-                    boxShadow: "0 4px 20px rgba(22,163,74,0.35)", marginTop: 4,
-                  }}
-                >
-                  Cadastrar meu negócio agora <ArrowRight size={16} />
-                </button>
+                    fontFamily: "Poppins, sans-serif", fontWeight: 800, fontSize: 15,
+                  }}>
+                    {step.num}
+                  </div>
 
-                <p style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: "#9CA3AF", textAlign: "center", margin: 0 }}>
-                  Começar é grátis · Sem contrato · Cancele quando quiser
-                </p>
-              </form>
-            )}
+                  {/* Conteúdo */}
+                  <div style={{ paddingBottom: i < arr.length - 1 ? 28 : 0 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                      <span style={{ fontSize: 18 }}>{step.icon}</span>
+                      <p style={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 15, color: "#111827", margin: 0 }}>
+                        {step.titulo}
+                      </p>
+                    </div>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "#6B7280", margin: 0, lineHeight: 1.6 }}>
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA principal */}
+            <div style={{ textAlign: "center" }}>
+              <a
+                href={ONBOARDING_URL}
+                style={{
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  gap: 8, background: "#16A34A", color: "white",
+                  fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 15,
+                  padding: "15px 36px", borderRadius: 12, textDecoration: "none",
+                  boxShadow: "0 4px 20px rgba(22,163,74,0.35)",
+                  width: "100%", boxSizing: "border-box",
+                }}
+              >
+                Começar agora — é grátis <ArrowRight size={16} />
+              </a>
+              <p style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: "#9CA3AF", marginTop: 10 }}>
+                Sem contrato · Cancele quando quiser
+              </p>
+            </div>
 
             {/* Alt: WhatsApp */}
             <div style={{ marginTop: 28, borderTop: "1px solid #E5E7EB", paddingTop: 24, textAlign: "center" }}>
               <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "#6B7280", margin: "0 0 12px" }}>
-                Prefere tirar dúvidas primeiro?
+                Ficou com dúvida? Fale com nossa equipe
               </p>
               <a
                 href={zappiLink}
@@ -286,7 +261,7 @@ export function ParceiroPage() {
                   padding: "11px 22px", borderRadius: 10, textDecoration: "none",
                 }}
               >
-                <MessageCircle size={15} /> Falar com o Zappi
+                <MessageCircle size={15} /> Falar pelo WhatsApp
               </a>
             </div>
           </div>
