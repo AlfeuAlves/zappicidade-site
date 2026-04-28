@@ -107,9 +107,19 @@ export function DirectoryFooter() {
           <span style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: "#6B7280" }}>
             © {new Date().getFullYear()} ZappiCidade Barcarena. Todos os direitos reservados.
           </span>
-          <span style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: "#6B7280" }}>
-            Feito com ❤️ em Barcarena, PA
-          </span>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <span style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: "#6B7280" }}>
+              Feito com ❤️ em Barcarena, PA
+            </span>
+            <a
+              href={`${FRONTEND_URL}/admin`}
+              style={{ fontFamily: "Inter, sans-serif", fontSize: 11, color: "#374151", textDecoration: "none", opacity: 0.5 }}
+              onMouseEnter={e => e.currentTarget.style.opacity = "1"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "0.5"}
+            >
+              Admin
+            </a>
+          </div>
         </div>
       </div>
     </footer>
