@@ -18,7 +18,7 @@ export function useCidadeStats(): UseCidadeStatsResult {
         setResumo(r)
         setBairros(b)
       })
-      .catch(console.error)
+      .catch(() => {})
       .finally(() => setLoading(false))
   }, [])
 
