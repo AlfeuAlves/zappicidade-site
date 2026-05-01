@@ -184,6 +184,14 @@ export function HomePage() {
 
       <main style={{ flex: 1 }}>
 
+        {/* ── BANNER MANUTENÇÃO ────────────────────────────── */}
+        <div style={{ background: '#FEF3C7', borderBottom: '1px solid #FDE68A', padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 18 }}>⚙️</span>
+          <p style={{ margin: 0, fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#92400E', textAlign: 'center' }}>
+            <strong>Aviso:</strong> Nosso assistente pelo WhatsApp está temporariamente fora do ar. Em breve voltamos! Você pode usar o guia normalmente pelo site.
+          </p>
+        </div>
+
         {/* ── HERO / SEARCH ENGINE ─────────────────────────── */}
         <section style={{ background: "white", padding: "48px 20px 40px", borderBottom: "1px solid #E5E7EB" }}>
           <div style={{ maxWidth: 680, margin: "0 auto", textAlign: "center" }}>
