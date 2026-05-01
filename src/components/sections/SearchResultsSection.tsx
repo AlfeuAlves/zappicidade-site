@@ -265,6 +265,11 @@ export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void
           }}>
             {c.nome}
           </h2>
+          {c.descricao && (
+            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "#4B5563", lineHeight: 1.6, margin: "8px 0 4px" }}>
+              {c.descricao}
+            </p>
+          )}
           <span style={{ fontSize: 13, color: "#6B7280", fontWeight: 500 }}>
             {icone} {c.categoria_nome}
           </span>

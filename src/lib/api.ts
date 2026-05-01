@@ -23,6 +23,7 @@ export interface Comercio {
   whatsapp: string | null
   avaliacao: number | null
   total_avaliacoes: number
+  descricao: string | null
   foto_capa_url: string | null
   logo_url?: string | null
   fotos?: string[]
@@ -96,5 +97,13 @@ export const api = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ comercio_id, whatsapp, origem: 'landing_page' }),
       }).then(r => { if (!r.ok) throw new Error('Erro ao registrar'); return r.json(); }),
+  },
+  eventos: {
+    registrar: (comercio_id: string, tipo: 'impressao' | 'clique_whatsapp' | 'clique_perfil', termo_busca?: string) =>
+      fetch(`${API_URL}/comercios/evento`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ comercio_id, tipo, termo_busca }),
+      }).catch(() => {}),
   },
 }
