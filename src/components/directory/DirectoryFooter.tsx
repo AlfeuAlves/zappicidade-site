@@ -1,4 +1,4 @@
-import { MessageCircle, MapPin } from "lucide-react";
+import { MessageCircle, MapPin, Instagram, Facebook } from "lucide-react";
 import { Link } from "wouter";
 
 const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER ?? "5591993870599";
@@ -108,6 +108,28 @@ export function DirectoryFooter() {
             © {new Date().getFullYear()} ZappiCidade Barcarena. Todos os direitos reservados.
           </span>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <a
+              href="https://www.instagram.com/zappicidadebarcarena/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "flex", alignItems: "center", gap: 5, fontFamily: "Inter, sans-serif", fontSize: 12, color: "#9CA3AF", textDecoration: "none", transition: "color 0.15s" }}
+              onMouseEnter={e => e.currentTarget.style.color = "#E1306C"}
+              onMouseLeave={e => e.currentTarget.style.color = "#9CA3AF"}
+            >
+              <Instagram size={14} />
+              @zappicidadebarcarena
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61569265889275"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "flex", alignItems: "center", gap: 5, fontFamily: "Inter, sans-serif", fontSize: 12, color: "#9CA3AF", textDecoration: "none", transition: "color 0.15s" }}
+              onMouseEnter={e => e.currentTarget.style.color = "#1877F2"}
+              onMouseLeave={e => e.currentTarget.style.color = "#9CA3AF"}
+            >
+              <Facebook size={14} />
+              ZappiCidade
+            </a>
             <span style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: "#6B7280" }}>
               Feito com ❤️ em Barcarena, PA
             </span>

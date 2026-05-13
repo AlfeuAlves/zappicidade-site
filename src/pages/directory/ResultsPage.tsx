@@ -16,15 +16,21 @@ function linkWhatsApp(numero: string, msg: string) {
   return `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
 }
 
-function ResultCard({ c, onVerInfo }: { c: Comercio; onVerInfo: () => void }) {
+function ResultCard({ c, onVerInfo, termoBusca }: { c: Comercio; onVerInfo: () => void; termoBusca?: string }) {
   const numero = c.whatsapp || c.telefone;
   const wa = numero ? linkWhatsApp(numero, `Olá! Vi o ${c.nome} no ZappiCidade e quero saber mais.`) : null;
 
   const handleWaClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     api.leads.whatsappClick(c.id);
+    api.eventos.registrar(c.id, 'clique_whatsapp', termoBusca);
     if (wa) window.open(wa, "_blank");
     else window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Quero mais informações sobre ${c.nome}`)}`, "_blank");
+  };
+
+  const handleVerInfo = () => {
+    api.eventos.registrar(c.id, 'clique_perfil', termoBusca);
+    onVerInfo();
   };
 
   return (
@@ -43,7 +49,7 @@ function ResultCard({ c, onVerInfo }: { c: Comercio; onVerInfo: () => void }) {
     >
       {/* Capa clicável */}
       <div
-        onClick={onVerInfo}
+        onClick={handleVerInfo}
         style={{
           height: 110,
           position: "relative",
@@ -76,7 +82,7 @@ function ResultCard({ c, onVerInfo }: { c: Comercio; onVerInfo: () => void }) {
       </div>
 
       {/* Info */}
-      <div onClick={onVerInfo} style={{ padding: "10px 12px 6px", flex: 1, display: "flex", flexDirection: "column", gap: 4, cursor: "pointer" }}>
+      <div onClick={handleVerInfo} style={{ padding: "10px 12px 6px", flex: 1, display: "flex", flexDirection: "column", gap: 4, cursor: "pointer" }}>
         <h3 style={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 13, color: "#111827", margin: 0, lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
           {c.nome}
         </h3>
@@ -120,7 +126,7 @@ function ResultCard({ c, onVerInfo }: { c: Comercio; onVerInfo: () => void }) {
           <Phone size={12} /> Falar no WhatsApp
         </button>
         <button
-          onClick={onVerInfo}
+          onClick={handleVerInfo}
           style={{
             display: "flex", alignItems: "center", justifyContent: "center",
             gap: 5, background: "white", color: "#374151",
@@ -166,6 +172,8 @@ export function ResultsPage() {
       const res = await api.comercios.listar(p);
       setComercios(res.data);
       setTotal(res.meta.total);
+      // Registra impressão para cada comércio exibido
+      res.data.forEach((c: Comercio) => api.eventos.registrar(c.id, 'impressao', q || undefined));
     } catch {
       setComercios([]);
       setTotal(0);
@@ -406,7 +414,7 @@ export function ResultsPage() {
           <>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 14 }}>
               {comercios.map(c => (
-                <ResultCard key={c.id} c={c} onVerInfo={() => setModalComercio(c)} />
+                <ResultCard key={c.id} c={c} onVerInfo={() => setModalComercio(c)} termoBusca={query || undefined} />
               ))}
             </div>
 
