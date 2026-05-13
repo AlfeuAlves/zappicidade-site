@@ -25,7 +25,12 @@ export default function App() {
     if (!match) return;
     const slug = match[1];
     api.comercios.porSlug(slug)
-      .then(c => { if (c) setModalComercio(c); })
+      .then(c => {
+        if (c) {
+          setModalComercio(c);
+          api.eventos.registrar(c.id, 'clique_perfil');
+        }
+      })
       .catch(() => {});
   }, []);
 

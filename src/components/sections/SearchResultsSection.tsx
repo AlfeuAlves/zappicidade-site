@@ -416,6 +416,7 @@ export function ModalComercio({ c, onClose }: { c: Comercio; onClose: () => void
               href={wa}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => api.eventos.registrar(c.id, 'clique_whatsapp')}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center",
                 gap: 6, background: "#25D366", color: "white",
