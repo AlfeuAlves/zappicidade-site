@@ -106,4 +106,33 @@ export const api = {
         body: JSON.stringify({ comercio_id, tipo, termo_busca }),
       }).catch(() => {}),
   },
+  informacoes: {
+    listar: (params?: { categoria?: string; busca?: string; page?: number }) => {
+      const qs = new URLSearchParams({ limit: '12' })
+      if (params?.categoria) qs.set('categoria', params.categoria)
+      if (params?.busca)     qs.set('busca', params.busca)
+      if (params?.page)      qs.set('page', String(params.page))
+      return get<{ data: InfoItem[]; meta: { total: number; page: number; limit: number } }>(`/informacoes?${qs}`)
+    },
+    enviar: (body: {
+      titulo: string; conteudo: string; categoria: string;
+      icone?: string; fonte?: string; valido_ate?: string; whatsapp_colaborador?: string
+    }) =>
+      fetch(`${API_URL}/informacoes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      }).then(r => r.json()),
+  },
+}
+
+export interface InfoItem {
+  id: string
+  titulo: string
+  conteudo: string
+  categoria: string
+  icone: string | null
+  fonte: string | null
+  valido_ate: string | null
+  criado_em: string
 }

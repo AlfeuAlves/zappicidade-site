@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import {
   HeroSection, HowItWorksSection, CategoriesSection,
   MerchantsSection, PlansSection, CtaSection, FooterSection,
-  SearchResultsSection, QrCodeSection,
+  SearchResultsSection, QrCodeSection, InformacoesSection,
 } from './components/sections';
 import { ModalComercio } from './components/sections/SearchResultsSection';
 import { useCidadeStats } from './hooks/useCidadeStats';
@@ -109,6 +109,7 @@ export default function App() {
         {!searchQuery && (
           <>
             <HowItWorksSection />
+            <InformacoesSection />
             <CategoriesSection
               categorias={resumo?.stats.categorias}
               loading={loading}
